@@ -149,6 +149,58 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 19
 }).addTo(map);
 
+// --- Show user's current location ---
+function enableUserLocation() {
+  // Ask for location
+  map.locate({
+    watch: true,        // keep updating as you move
+    setView: false,     // don't auto-zoom every time
+    enableHighAccuracy: true
+  });
+
+  let userMarker = null;
+  let userCircle = null;
+
+  // When Leaflet receives a location update
+  map.on('locationfound', e => {
+    const latlng = e.latlng;
+
+    // If marker exists, move it; otherwise create
+    if (!userMarker) {
+      userMarker = L.marker(latlng, {
+        icon: L.divIcon({
+          html: '<div style="background:#1d4ed8;color:#fff;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;box-shadow:0 0 6px rgba(0,0,0,.4)">📍</div>',
+          iconSize: [18,18],
+          iconAnchor: [9,9]
+        })
+      }).addTo(map).bindPopup("You are here");
+    } else {
+      userMarker.setLatLng(latlng);
+    }
+
+    // Accuracy circle
+    if (!userCircle) {
+      userCircle = L.circle(latlng, {
+        radius: e.accuracy,
+        color: "#1d4ed8",
+        fillColor: "#1d4ed8",
+        fillOpacity: 0.15
+      }).addTo(map);
+    } else {
+      userCircle.setLatLng(latlng);
+      userCircle.setRadius(e.accuracy);
+    }
+  });
+
+  // If location fails
+  map.on('locationerror', err => {
+    console.warn("Location error:", err.message);
+  });
+}
+
+// Call the function
+enableUserLocation();
+  
 const info = document.getElementById('info');
 
 // --- Icons ---
@@ -222,4 +274,5 @@ showRoute(GEOJSON);
 </script>
 
 </body>
+
 </html>

@@ -149,23 +149,19 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 19
 }).addTo(map);
 
-// --- Show user's current location ---
 function enableUserLocation() {
-  // Ask for location
   map.locate({
-    watch: true,        // keep updating as you move
-    setView: false,     // don't auto-zoom every time
+    watch: true,
+    setView: false,
     enableHighAccuracy: true
   });
 
   let userMarker = null;
   let userCircle = null;
 
-  // When Leaflet receives a location update
   map.on('locationfound', e => {
     const latlng = e.latlng;
 
-    // If marker exists, move it; otherwise create
     if (!userMarker) {
       userMarker = L.marker(latlng, {
         icon: L.divIcon({
@@ -178,7 +174,6 @@ function enableUserLocation() {
       userMarker.setLatLng(latlng);
     }
 
-    // Accuracy circle
     if (!userCircle) {
       userCircle = L.circle(latlng, {
         radius: e.accuracy,
@@ -192,13 +187,11 @@ function enableUserLocation() {
     }
   });
 
-  // If location fails
   map.on('locationerror', err => {
     console.warn("Location error:", err.message);
   });
 }
 
-// Call the function
 enableUserLocation();
   
 const info = document.getElementById('info');
@@ -276,3 +269,4 @@ showRoute(GEOJSON);
 </body>
 
 </html>
+

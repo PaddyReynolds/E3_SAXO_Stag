@@ -101,7 +101,7 @@ const GEOJSON = {"type":"FeatureCollection","features":[{"type":"Feature","prope
 
     // --- SETTINGS ---
 
-    const POI_BUFFER_METERS = 1000;          // route distance & user distance threshold
+    const POI_BUFFER_METERS = 100;          // route distance & user distance threshold
     const OVERPASS_TIMEOUT = 25;
     const OVERPASS_ENDPOINT = "https://overpass-api.de/api/interpreter";
 
@@ -109,7 +109,7 @@ const GEOJSON = {"type":"FeatureCollection","features":[{"type":"Feature","prope
     const AMENITY_REGEX = "pub|bar|biergarten";
 
     // For user query we ask Overpass a bit wider than 100m, then filter to 100m
-    const USER_QUERY_RADIUS_METERS = 1500;
+    const USER_QUERY_RADIUS_METERS = 500;
 
     // Build an Overpass query using bbox (south,west,north,east)
 
@@ -467,3 +467,4 @@ out center;`;
   </script>
 </body>
 </html>
+

@@ -117,7 +117,7 @@ const GEOJSON = {"type":"FeatureCollection","features":[{"type":"Feature","prope
       const s = bbox.getSouth(), w = bbox.getWest(), n = bbox.getNorth(), e = bbox.getEast();
    
       
-      return 
+      return ` 
       
 [out:json][timeout:${OVERPASS_TIMEOUT}];
 (
@@ -465,11 +465,21 @@ out center;`;
       renderInfo();
       console.error("GEOJSON is not defined. Please define const GEOJSON = { ... } before calling showRoute.");
     } else {
-      showRoute(GEOJSON);
+      showRoute(GEOJSON);  
     }
+    
+    // House location: Ridderstraat 13, 9000 Gent
+    const houseLat = 51.0549855;
+    const houseLon = 3.7290027;
+    
+    // Add marker with default Leaflet pin
+    L.marker([houseLat, houseLon])
+      .addTo(map)
+      .bindPopup("Ridderstraat 13, 9000 Gent, Belgium");    
   </script>
 </body>
 </html>
+
 
 
 

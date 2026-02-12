@@ -115,7 +115,18 @@ const GEOJSON = {"type":"FeatureCollection","features":[{"type":"Feature","prope
 
     function overpassQueryForBBox(bbox) {
       const s = bbox.getSouth(), w = bbox.getWest(), n = bbox.getNorth(), e = bbox.getEast();
+   
+      
       return `
+// House location: Ridderstraat 13, 9000 Gent
+const houseLat = 51.0549855;
+const houseLon = 3.7290027;
+
+// Add marker with default Leaflet pin
+L.marker([houseLat, houseLon])
+  .addTo(map)
+  .bindPopup("Ridderstraat 13, 9000 Gent, Belgium");
+      
 [out:json][timeout:${OVERPASS_TIMEOUT}];
 (
   node["amenity"~"^(${AMENITY_REGEX})$"](${s},${w},${n},${e});
@@ -467,4 +478,5 @@ out center;`;
   </script>
 </body>
 </html>
+
 
